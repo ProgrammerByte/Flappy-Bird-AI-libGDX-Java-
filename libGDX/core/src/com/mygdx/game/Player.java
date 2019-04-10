@@ -18,12 +18,17 @@ public class Player {
 		this.x = 100;
 		this.y = 250;
 		this.radius = 10;
-		this.yacc = 0.3;
+		this.yacc = 0.6;
 	}
 	
 	
 	public void gravity(Player player) {
-		player.setVely(player.getVely() - player.getAcc()); 
+		if (player.getVely() >= -10) {
+			player.setVely(player.getVely() - player.getAcc()); 
+		}
+		else {
+			player.setVely(-10);
+		}
 		player.setY(player.getY() + (int)player.getVely());
 	}
 	
@@ -32,14 +37,14 @@ public class Player {
 		boolean aijump = false;
 		if (player.getAimode() == true && ispressed == false && playing == true) {
 			boolean found = false; //finds out which pipe is next
-			if (player.getY() + (int)(player.getVely() - player.getAcc()) <= 0) {
+			if (player.getY() - player.getRad() + (int)(player.getVely() - player.getAcc()) <= 0) {
 				aijump = true;
 			}
 			
 			for (int i = 0; i < pipes.length; i++) {
 				if (pipes[i].getX() + pipes[i].getWidth() > player.getX() - player.getRad() && found == false) {
 					found = true;
-					if (player.getY() - player.getRad() + (int)(player.getVely() - player.getAcc())<= pipes[i].getY() - 120) {
+					if (player.getY() - player.getRad() + (int)(player.getVely() - player.getAcc()) <= pipes[i].getY() - pipes[i].getGap()) {
 						aijump = true;
 					}
 				}
@@ -66,7 +71,7 @@ public class Player {
 				player.setButtonstate(true);
 				ispressed = true;
 				if (playing == true) {
-					player.setVely(7);
+					player.setVely(9);
 				}
 			}
 			else {
@@ -106,7 +111,7 @@ public class Player {
 					player.setPassed(true);
 				}
 				
-				if (player.getY() + player.getRad() > pipes[i].getY() || player.getY() - player.getRad() < pipes[i].getY() - 120) {
+				if (player.getY() + player.getRad() > pipes[i].getY() || player.getY() - player.getRad() < pipes[i].getY() - pipes[i].getGap()) {
 					player.setButtonstate(false);
 					playing = false;
 				}

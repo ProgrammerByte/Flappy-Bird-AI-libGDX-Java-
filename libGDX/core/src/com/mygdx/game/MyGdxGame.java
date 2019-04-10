@@ -71,7 +71,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			pipes = new Pipe[0];
 		}
 		if (playing == true) {
-			if (count % 100 == 0) {
+			if (count % 100 == 0 && count >= 200) {
 				pipes = newPipe(pipes, height, width);
 			}
 		}
@@ -82,7 +82,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		sr.setColor(Color.GREEN);
 		for (int i = 0; i < pipes.length; i++) {
 			sr.rect(pipes[i].getX(), pipes[i].getY(), pipes[i].getWidth(), pipes[i].getHeight());
-			sr.rect(pipes[i].getX(), 0, pipes[i].getWidth(), height - pipes[i].getHeight() - 120);
+			sr.rect(pipes[i].getX(), 0, pipes[i].getWidth(), height - pipes[i].getHeight() - pipes[i].getGap());
 			if (playing == true) {
 				pipes[i].setX(pipes[i].getX() - 3);
 			}
